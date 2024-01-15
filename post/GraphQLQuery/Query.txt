@@ -1,0 +1,12 @@
+query newsFeed {
+  showAllPosts(userids:[1,4], userId: 2, offset: -1) {
+    id
+    userId
+    content
+    category
+    file
+    date
+    nlikes
+    isLiked
+   }
+}

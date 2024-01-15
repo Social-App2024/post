@@ -1,0 +1,16 @@
+server:
+  port: 9092
+
+spring:
+#  profiles:
+#    active: local
+  application:
+    name: POSTS-SERVICE
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/social
+      host: localhost
+      port: 27017
+      database: social
+      repositories:
+        enabled: true

@@ -1,0 +1,16 @@
+scalar Long
+
+type Query {
+    showAllPosts(userids: [Long], userId: Long, offset: Long): [Post]
+}
+
+type Post {
+    id: String
+    userId: Long
+    content: String
+    category: String
+    file: String
+    date: String
+    nlikes: Int
+    isLiked: Boolean
+}

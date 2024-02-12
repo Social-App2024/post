@@ -32,6 +32,9 @@ public class PostsController {
     @Autowired
     PostsService service;
 
+    /**
+     * Create new text post
+     */
     @PostMapping("/post")
     public Post savePost(@RequestBody Post post)
     {
@@ -71,6 +74,13 @@ public class PostsController {
 //        return post;
 //    }
 
+    /**
+     * Save post with media content
+     * @param request
+     * @param file
+     * @return
+     * @throws Exception
+     */
     @PostMapping("/upload")
 //    public Post savePost(HttpServletRequest request, @RequestParam("file") MultipartFile file) throws Exception {
     public Post savePost(MultipartHttpServletRequest request, @RequestParam("file") MultipartFile file) throws Exception {
@@ -90,6 +100,12 @@ public class PostsController {
         return post;
     }
 
+    /**
+     * Used by HTML <video> tag to display video content of a post
+     * @param postId
+     * @param range used internally
+     * @return
+     */
     @GetMapping(value = "/video/{postId}", produces = "video/mp4")
     public Mono<Resource> getVideo(@PathVariable String postId, @RequestHeader("Range") String range)
     {

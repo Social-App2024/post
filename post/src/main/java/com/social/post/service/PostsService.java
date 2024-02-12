@@ -70,6 +70,12 @@ public class PostsService {
         }
     }
 
+    /**
+     * Checks if the post is liked by the opeining profile
+     * @param postId
+     * @param userId profile id
+     * @return
+     */
     public boolean doesUserLikePost(String postId, long userId)
     {
         boolean liked=false;
@@ -82,6 +88,12 @@ public class PostsService {
         return liked;
     }
 
+    /**
+     * Show first 10 posts of the list of following userids
+     * @param userids
+     * @param offset used internally for scrolling, start at -1
+     * @return
+     */
     public List<Post> showAllPosts(List<Long> userids, long offset) {
         Window<Post> posts=null;
         List<Post> postsView=new ArrayList<>();
@@ -99,6 +111,7 @@ public class PostsService {
         postsView=posts.get().map(post -> new Post(post.getId(),post.getUserId(),post.getContent(),
                                                 post.getCategory(),post.getFile(),post.getLikes(),
                                                 post.getDate())).collect(Collectors.toList());
+        // display images in Base64 format, for efficient transmission
         postsView.stream().filter(post -> post.getCategory().equals("photo")).
                 forEach(post -> {
                     try {
@@ -112,6 +125,12 @@ public class PostsService {
         return postsView;
     }
 
+    /**
+     * Helper method to display a post file in Base64
+     * @param post
+     * @return
+     * @throws Exception
+     */
     private String getImageStream(Post post) throws Exception {
         InputStream sourceStream  = new FileInputStream(post.getFile());
         byte[] sourceBytes = IOUtils.toByteArray(sourceStream);

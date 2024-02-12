@@ -75,7 +75,9 @@ public class PostsController {
 //    }
 
     /**
-     * Save post with media content
+     * Save post with media content, currently saved in local file system
+     * please update the upload path below in setFile method,
+     * front end sample in resources/static/video.html
      * @param request
      * @param file
      * @return

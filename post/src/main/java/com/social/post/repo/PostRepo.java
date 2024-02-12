@@ -10,6 +10,9 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * The main interface for handling mongodb DB queries
+ */
 @Repository
 public interface PostRepo extends MongoRepository<Post,String> {
 

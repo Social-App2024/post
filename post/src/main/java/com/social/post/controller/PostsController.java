@@ -25,6 +25,9 @@ import java.io.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+/**
+ * The main class for receiving Rest API calls
+ */
 @RestController
 @CrossOrigin
 @RequestMapping("/posts")

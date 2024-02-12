@@ -18,6 +18,9 @@ import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * Service class for handling API logic
+ */
 @Service
 public class PostsService {
     private static final String FILEPATH="D:\\mine\\Projects\\Social App\\downloads\\%s";

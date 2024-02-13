@@ -12,4 +12,4 @@ To run the microservice, do the following:
 - Install JDK 17
 - Create a blank DB in mongo, name it "social"
 - Open the project from IDE (Intellij or Eclipse STS)
-- run the project, and access the APIs from above urls
+- run PostApplication.java, and access the APIs from above urls

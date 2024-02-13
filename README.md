@@ -12,5 +12,6 @@ The microservice implemented in Spring Boot, Mongodb and GraphQL.
 To run the microservice, do the following:
 - Install JDK 17
 - Create a blank DB in mongo, name it "social"
+- Run the service discovery Eureka server in this repository: https://github.com/Microservices-Restaurant-App/eureka.git
 - Open the project from IDE (Intellij or Eclipse STS)
 - run PostApplication.java, and access the APIs from above urls

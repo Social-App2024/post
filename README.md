@@ -3,9 +3,10 @@
 Post microservice, responsible for handling and saving posts in Thaqafa Network.
 It includes below APIs:
 - Create Post
-  (http://localhost:9092/posts/post)
+  POST - (http://localhost:9092/posts/post)
 - Show all posts / News Feed
-  (http://localhost:9092/graphql)
+  POST - (http://localhost:9092/graphql)
+Complete APIs calls in the file: Posts.postman_collection.json
 
 The microservice implemented in Spring Boot, Mongodb and GraphQL.
 To run the microservice, do the following:

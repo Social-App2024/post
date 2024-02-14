@@ -19,6 +19,8 @@ public class Post {
     String id;
     long userId;
     String content;
+    String text;
+    String contentType;
     String category;
     String file;
     List<Long> likes;

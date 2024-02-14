@@ -111,14 +111,15 @@ public class PostsService {
 //                .startingAt(OffsetScrollPosition.initial());
 
         //users.toList().stream().map(profile -> followingList.add(new Follower(profile.getUserId(),profile.getName())));
-        postsView=posts.get().map(post -> new Post(post.getId(),post.getUserId(),post.getContent(),
+        postsView=posts.get().map(post -> new Post(post.getId(),post.getUserId(),post.getContent(),post.getText(),post.getContentType(),
                                                 post.getCategory(),post.getFile(),post.getLikes(),
                                                 post.getDate())).collect(Collectors.toList());
         // display images in Base64 format, for efficient transmission
-        postsView.stream().filter(post -> post.getCategory().equals("photo")).
+        postsView.stream().filter(post -> post.getCategory().equals("photo") ||
+                        post.getCategory().equals("video") || post.getCategory().equals("podcast")).
                 forEach(post -> {
                     try {
-                        post.setContent(getImageStream(post));
+                        post.setContent(getBase64Stream(post));
                     } catch (Exception e) {
                         //throw new RuntimeException(e);
                         e.printStackTrace();
@@ -134,11 +135,11 @@ public class PostsService {
      * @return
      * @throws Exception
      */
-    private String getImageStream(Post post) throws Exception {
+    private String getBase64Stream(Post post) throws Exception {
         InputStream sourceStream  = new FileInputStream(post.getFile());
         byte[] sourceBytes = IOUtils.toByteArray(sourceStream);
 
-        String encodedString = Base64.getEncoder().encodeToString(sourceBytes);
+        String encodedString = "data:"+post.getContentType()+";base64,"+Base64.getEncoder().encodeToString(sourceBytes);
         return encodedString;
     }
 }

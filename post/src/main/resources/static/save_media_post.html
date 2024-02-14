@@ -66,32 +66,46 @@ video {
 </head>
 <body>
 <div class="container">
-        <h1> Send Photo/Video</h1>
-        <form id="form" action="http://localhost:9092/posts/upload" method="post" enctype="multipart/form-data">
-			<label for="myfile">Select a file:</label>
-			<input type="file" id="file" name="file">
-			<input type="hidden" id="userid" name="userid" value="2">
-			<input type="hidden" id="category" name="category" value="photo">
-			<input type="submit" value="Submit">
-		</form>
-    </div>
+    <h1> Send Photo/Video</h1>
+    <form id="form" action="http://localhost:9092/posts/upload" method="post" enctype="multipart/form-data">
+        <label for="file">Select a file:</label>
+        <input type="file" id="file" name="file" onchange="onFileSelected()"/>
+        <br>
+        <br>
+        <input type="hidden" id="userid" name="userid" value="2"/>
+        <!--input type="hidden" id="category" name="category"/-->
+        <label for="category">category:</label>
+        <select name="category" id="category">
+            <option value="podcast">podcast</option>
+            <option value="video">video</option>
+            <option value="photo">photo</option>
+        </select>
+        <br>
+        <br>
+        <textarea id="text" name="text" cols="40" rows="3"></textarea>
+        <br>
+        <br>
+        <input type="submit" value="Submit"/>
+    </form>
+</div>
 <div class="container">
-        <h1> Video Recorder</h1>
-        <video id="videoPreview" autoplay controls></video>
-        <div class="controls">
-            <button id="startRecording" class="button start">🔴 Start Recording</button>
-            <button id="stopRecording" class="button stop" disabled>⏹️ Stop Recording</button>
-        </div>
-        <a id="downloadLink" class="download-link" style="display: none;">⬇️ Download Video</a>
+    <h1> Video Recorder</h1>
+    <video id="videoPreview" autoplay controls></video>
+    <div class="controls">
+        <button id="startRecording" class="button start">🔴 Start Recording</button>
+        <button id="stopRecording" class="button stop" disabled>⏹️ Stop Recording</button>
     </div>
-    
-    <script>
+    <a id="downloadLink" class="download-link" style="display: none;">⬇️ Download Video</a>
+</div>
+
+<script>
         const videoPreview = document.getElementById("videoPreview");
 const startRecordingButton = document.getElementById("startRecording");
 const stopRecordingButton = document.getElementById("stopRecording");
 const downloadLink = document.getElementById("downloadLink");
 const form = document.querySelector('form');
 const file=document.getElementById("file");
+let category=document.getElementById("category");
 
 let mediaRecorder;
 let recordedChunks = [];
@@ -101,9 +115,29 @@ stopRecordingButton.addEventListener("click", stopRecording);
 
 //form.addEventListener('submit', handleSubmit);
 
+function onFileSelected(event)
+{
+	//const fileEntry = event.target.file;
+	const fileEntry = file.files[0];
+	const type=fileEntry.type;
+
+	if(type && type.includes('image'))
+	{
+		category.value="photo";
+	}
+	else if(type && type.includes('video') && category.value!=="podcast")
+	{
+		category.value="video";
+	}
+
+    console.log("file details");
+    console.log(fileEntry.type);
+	console.log(fileEntry);
+}
+
 /** @param {Event} event */
 function handleSubmit(event) {
-	
+
   const url = new URL(form.action);
 	const formData = new FormData(form);
 	/** @type {Parameters<fetch>[1]} */
@@ -118,7 +152,7 @@ function handleSubmit(event) {
 	};
 
 	fetch(url, fetchOptions);
-	
+
 	event.preventDefault();
 }
 

@@ -92,6 +92,7 @@ public class PostsController {
         String filename= file.getOriginalFilename();//request.getHeader("filename");
         Post post=new Post();
         post.setCategory(request.getParameter("category"));
+        post.setText(request.getParameter("text"));
         post.setUserId(Long.parseLong(request.getParameter("userid")));
         post.setDate(LocalDate.now());
 
@@ -100,6 +101,7 @@ public class PostsController {
         IOUtils.copy(file.getInputStream(), out);
         out.close();
         post.setFile("D:\\mine\\Projects\\Social App\\downloads\\"+filename);
+        post.setContentType(file.getContentType());
 
         post=service.savePost(post);
         return post;

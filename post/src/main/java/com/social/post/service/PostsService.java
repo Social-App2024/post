@@ -122,8 +122,7 @@ public class PostsService {
                                                 post.getCategory(),post.getFile(),post.getLikes(),
                                                 post.getDate())).collect(Collectors.toList());
         // display images in Base64 format, for efficient transmission
-        postsView.stream().filter(post -> post.getCategory().equals("book") || post.getCategory().equals("photo") ||
-                        post.getCategory().equals("video") || post.getCategory().equals("podcast")).
+        postsView.stream().filter(post -> post.getCategory().equals("book") || post.getCategory().equals("photo")).
                 forEach(post -> {
                     try {
                         post.setContent(getBase64Stream(post));

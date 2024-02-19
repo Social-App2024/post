@@ -30,18 +30,24 @@ public class PostsService {
     ResourceLoader resourceLoader;
     public Post savePost(Post post) {
         post.setDate(LocalDate.now());
-        post.getUserId();
-        post.getContent();
         return repo.save(post);
     }
 
+    /**
+     * Service method to stream video post for display
+     * Javadoc: https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/core/io/ResourceLoader.html#getResource(java.lang.String)
+     * Tutorial: https://www.youtube.com/watch?v=_PEPaWFs064
+     * @param postId
+     * @return
+     */
     public Mono<Resource> getVideo(String postId)
     {
         Optional<Post> postOp=repo.findById(postId);
         if(postOp.isPresent())
         {
             Post post=postOp.get();
-            return Mono.fromSupplier(()->resourceLoader.getResource(String.format(FILEPATH,post.getFile())));
+            //return Mono.fromSupplier(()->resourceLoader.getResource(String.format(FILEPATH,post.getFile())));
+            return Mono.fromSupplier(()->resourceLoader.getResource("file:"+post.getFile()));
         }
         return null;
     }
@@ -92,7 +98,8 @@ public class PostsService {
     }
 
     /**
-     * Show first 10 posts of the list of following userids
+     * Show first 10 posts of the list of following userids,
+     * photos, books, and videos are encoded as Base64 strings within the posts
      * @param userids
      * @param offset used internally for scrolling, start at -1
      * @return
@@ -115,7 +122,7 @@ public class PostsService {
                                                 post.getCategory(),post.getFile(),post.getLikes(),
                                                 post.getDate())).collect(Collectors.toList());
         // display images in Base64 format, for efficient transmission
-        postsView.stream().filter(post -> post.getCategory().equals("photo") ||
+        postsView.stream().filter(post -> post.getCategory().equals("book") || post.getCategory().equals("photo") ||
                         post.getCategory().equals("video") || post.getCategory().equals("podcast")).
                 forEach(post -> {
                     try {

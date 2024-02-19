@@ -18,6 +18,7 @@ public class PostApplication {
 		return new WebMvcConfigurer() {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
+
 				registry.addMapping("/graphql").allowedOrigins("http://localhost:3000");
 			}
 		};
